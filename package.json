@@ -1,0 +1,32 @@
+{
+  "name": "jagmohanjwellersbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.15.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "firebase-admin": "^13.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.6.2",
+    "morgan": "^1.10.0",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.10",
+    "qs": "^6.15.2",
+    "razorpay": "^2.9.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
