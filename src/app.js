@@ -40,7 +40,7 @@ app.use(async (req, res, next) => {
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "Jagmohan Jewellers API is running",
+    message: "Raaj Ratan Jewellers API is running",
   });
 });
 
