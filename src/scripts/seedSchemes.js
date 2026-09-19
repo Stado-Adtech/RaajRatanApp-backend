@@ -1,67 +1,155 @@
 // src/scripts/seedSchemes.js
+
 import dns from "dns";
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Scheme from "../modules/scheme/scheme.model.js";
 
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
 dotenv.config();
 
 const seedSchemes = async () => {
-  await mongoose.connect(process.env.MONGO_URI);
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined in the .env file");
+    }
 
-  await Scheme.deleteMany({}); // clears existing schemes first
+    await mongoose.connect(process.env.MONGO_URI);
 
-  await Scheme.create({
-    name: "The Gold Wallet (11+1)",
-    description: "Pay a fixed monthly amount for 11 months and get 1 bonus month from the shop.",
-    imageUrl: "lib/assets/images/banners/Banner_01.png",
-    detailImageUrl: "lib/assets/images/banners/theGoldWallet-3.png",
-    installmentAmounts: [5000, 10000, 20000],
-    maturityText:
-      "At the time of maturity, customer will get 50% of single installment amount extra on purchase of gold jewellery and 50% extra discount voucher of single installment amount on purchase of diamond jewellery.",
-    benefits: [
-      "The Gold Wallet is the smart, secured, and easiest way to purchase your desired jewellery.",
-      "You can start with a minimum amount or choose your own.",
-      "Flexible installment options are available for customers.",
-      "Special maturity benefits are provided after successful completion.",
-    ],
-    schemeType: "11+1",
-    totalMonths: 11,
-    bonusMonths: 1,
-    minStartAmount: null,
-    installmentType: "fixed",
-    isActive: true,
-  });
+    console.log("✅ MongoDB connected");
 
-  await Scheme.create({
-    name: "Book My Gold Scheme",
-    description: "Start with any amount from ₹5,000 onwards. Pay more or less each month — never below your starting amount.",
-    imageUrl: "lib/assets/images/banners/Banner_02.png",
-    detailImageUrl: "lib/assets/images/banners/Banner_03.png",
-    installmentAmounts: [],
-    maturityText:
-      "At the time of maturity, customer will get 50% of single installment amount extra on purchase of gold jewellery and 50% extra discount voucher of single installment amount on purchase of diamond jewellery.",
-    benefits: [
-      "You decide how much to pay each month — no fixed commitment.",
-      "Your first payment sets your minimum; you can always pay more, never less.",
-      "No maximum limit — pay as much as you want in any month.",
-      "Flexible savings that adjust to your monthly budget.",
-      "Special maturity benefits are provided after successful completion.",
-    ],
-    schemeType: "Flexible",
-    totalMonths: 11,
-    bonusMonths: 0,
-    minStartAmount: 5000,
-    installmentType: "flexible",
-    isActive: true,
-  });
+    // Clear existing schemes
+    await Scheme.deleteMany({});
 
-  console.log("✅ Both schemes seeded successfully");
-  process.exit(0);
+    // --------------------------------------------------
+    // Scheme 1: Swarn Sanchay 11+1
+    // --------------------------------------------------
+    await Scheme.create({
+      name: "Swarn Sanchay (11+1)",
+
+      description:
+        "Pay a fixed monthly installment for 11 months and enjoy an additional bonus benefit from Raaj Ratan Jewellers.",
+
+      imageUrl: "lib/assets/images/banners/Banner_01.png",
+
+      detailImageUrl:
+        "lib/assets/images/banners/theGoldWallet-3.png",
+
+      installmentAmounts: [3000],
+
+      maturityText:
+        "On maturity, get a benefit equivalent of one installment amount on the purchase of gold jewellery.",
+
+      benefits: [
+        "Fixed monthly installment options.",
+        "Simple and disciplined jewellery savings.",
+        "Special maturity benefit after successful completion.",
+        "Plan your future gold or diamond jewellery purchase with ease.",
+      ],
+
+      schemeType: "11+1",
+
+      totalMonths: 11,
+
+      bonusMonths: 1,
+
+      minStartAmount: null,
+
+      installmentType: "fixed",
+
+      isActive: true,
+    });
+
+    // --------------------------------------------------
+    // Scheme 2: Swarn Sanchay 15+2
+    // --------------------------------------------------
+    await Scheme.create({
+      name: "Swarn Sanchay (15+2)",
+
+      description:
+        "Pay a fixed monthly installment for 15 months and receive the benefit of 2 additional bonus months.",
+
+      imageUrl: "lib/assets/images/banners/Banner_02.png",
+
+      detailImageUrl:
+        "lib/assets/images/banners/Banner_03.png",
+
+      installmentAmounts: [10000],
+
+      maturityText:
+        "After successful completion of all 15 installments, enjoy a benefit equivalent to 2 additional monthly installments toward your jewellery purchase.",
+
+      benefits: [
+        "Fixed monthly installment plan.",
+        "Pay for 15 months.",
+        "Get the benefit of 2 additional months.",
+        "Ideal for planning a higher-value jewellery purchase.",
+        "Special maturity benefits on successful completion."
+      ],
+
+      schemeType: "15+2",
+
+      totalMonths: 15,
+
+      bonusMonths: 2,
+
+      minStartAmount: null,
+
+      installmentType: "fixed",
+
+      isActive: true,
+    });
+
+    // --------------------------------------------------
+    // Scheme 3: Swarn Sanchay 24 Months
+    // --------------------------------------------------
+    await Scheme.create({
+      name: "Swarn Sanchay (24 Months)",
+
+      description:
+        "Start with ₹8,000 or more and enjoy the flexibility to increase your monthly payment according to your budget.",
+
+      imageUrl: "lib/assets/images/banners/Swarn Sanchay.png",
+
+      detailImageUrl:
+        "lib/assets/images/banners/Gold Investment Scheme.png",
+
+      installmentAmounts: [],
+
+      maturityText:
+        "Complete the 24-month scheme successfully and enjoy special maturity benefits along with applicable making-charge benefits.",
+
+      benefits: [
+        "Start from ₹8,000.",
+        "Pay more whenever you wish.",
+        "No maximum monthly payment limit.",
+        "Flexible payment structure.",
+        "Making charges free as per applicable scheme terms.",
+        "Ideal for long-term jewellery planning.",
+      ],
+
+      schemeType: "Flexible",
+
+      totalMonths: 24,
+
+      bonusMonths: 0,
+
+      minStartAmount: 8000,
+
+      installmentType: "flexible",
+
+      isActive: true,
+    });
+
+    console.log("✅ All 3 schemes seeded successfully");
+  } catch (error) {
+    console.error("❌ Scheme seed failed:", error);
+    process.exitCode = 1;
+  } finally {
+    await mongoose.disconnect();
+    console.log("✅ MongoDB disconnected");
+  }
 };
 
-seedSchemes().catch((err) => {
-  console.error("Seed failed:", err);
-  process.exit(1);
-});
+seedSchemes();
