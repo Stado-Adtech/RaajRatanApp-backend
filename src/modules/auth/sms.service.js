@@ -11,7 +11,7 @@ const normalizePhone = (phone = "") => {
 };
 
 const buildOtpMessage = (otp) => {
-  return `${otp} is your OTP to login to the Raaj Ratan Jewellers mobile application. OTP is valid for 5 minutes. Please do not share the OTP.`;
+  return `${otp} is your OTP to login to the Raaj Ratna Jewellers mobile application. OTP is valid for 5 minutes. Please do not share the OTP.`;
 };
 
 export const sendSmsOtp = async ({ phone, otp }) => {
