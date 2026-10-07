@@ -3,6 +3,8 @@
 // This ensures process.env values are loaded before Razorpay reads them
 
 import Razorpay from "razorpay";
+import dotenv from "dotenv";
+dotenv.config({ override: true });
 
 let razorpayInstance = null;
 

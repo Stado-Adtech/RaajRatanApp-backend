@@ -6,7 +6,7 @@ import SchemeEnrollment from "../schemeEnrollment/schemeEnrollment.model.js";
 import { createNotification } from "../notification/notification.service.js";
 
 const createOrderId = () =>
-  `JLSL_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+  `RAAJRATAN_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
 
 export const createRazorpayPaymentService = async ({
   user,
@@ -105,6 +105,8 @@ export const createRazorpayPaymentService = async ({
     currency: "INR",
     status: "created",
   });
+
+  console.log("Razorpay key in use:", process.env.RAZORPAY_KEY_ID);
 
   return {
     razorpayOrderId: razorpayOrder.id,
